@@ -21,7 +21,7 @@ const HabitContext = ({ children }) => {
         return {
           ...acc,
           allHabits: [
-            ...acc.habits.map((item) => (item.id === id.id ? id : item)),
+            ...acc.allHabits.map((item) => (item.id === id.id ? id : item)),
           ],
         };
       }
@@ -72,8 +72,13 @@ const HabitContext = ({ children }) => {
       }
 
       case "closeDetail": {
-        navigate('/');
-        return {...acc};
+        navigate("/");
+        return { ...acc };
+      }
+
+      case "editClose": {
+        navigate("/");
+        return { ...acc };
       }
     }
   };

@@ -7,6 +7,7 @@ import { UseHabits } from "../contexts/HabitContext";
 const Homepage = () => {
   const { HabitsObj } = UseHabits();
   const habitsToShow = HabitsObj.allHabits.filter(({id}) => HabitsObj.habits.includes(id));
+  console.log("habitssssss", habitsToShow)
 
   return (
     <React.Fragment>

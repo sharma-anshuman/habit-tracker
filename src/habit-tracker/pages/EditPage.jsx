@@ -3,8 +3,9 @@ import { UseHabits } from "../contexts/HabitContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import { v4 as uuid } from "uuid";
+import { useParams } from "react-router-dom";
 
-const HabitModal = () => {
+const EditPage = () => {
   const repeat = ["Daily", "Twice a day", "Weekly", "Monthly", "Yearly"];
   const goal = ["1 times Daily", "2 times daily", "3 times daily"];
   const timeOfDay = [
@@ -15,41 +16,38 @@ const HabitModal = () => {
     "Late Evening",
     "Night",
   ];
-  const startDate = ["Today", "Tomorrow", "After 2 days", "After 3 days"];
+  const {id} = useParams();
   const { HabitsObj, dispatch } = UseHabits();
-  const [goalVal, setGoal] = useState("1 times Daily");
-  const [repeatVal, setRepeat] = useState("Daily");
-  const [timeVal, setTime] = useState("Any time");
-  const [startVal, setStart] = useState("Today");
-  const [habitVal, setHabit] = useState("");
+  const currHabit = HabitsObj.allHabits.find(({ id: i }) => i === id);
+  console.log(currHabit);
+
+  const startDate = ["Today", "Tomorrow", "After 2 days", "After 3 days"];
+  const [goalVal, setGoal] = useState(currHabit.goal);
+  const [repeatVal, setRepeat] = useState(currHabit.repeat);
+  const [timeVal, setTime] = useState(currHabit.timeOfDay);
+  const [startVal, setStart] = useState(currHabit.startDate);
+  const [habitVal, setHabit] = useState(currHabit.habit);
 
   const submitHandler = (event) => {
     dispatch({
       id: {
-        id: uuid(),
+        id: currHabit.id,
         habit: habitVal,
         repeat: repeatVal,
         goal: goalVal,
         timeOfDay: timeVal,
         startDate: startVal,
       },
-      action: "add",
+      action: "edit",
     });
-    dispatch({ id: 0, action: "close" });
+    dispatch({ id: 0, action: "editClose" });
     event.preventDefault();
-    setGoal("1 times Daily");
-    setRepeat("Daily");
-    setTime("Any time");
-    setStart("Today");
-    setHabit("");
   };
 
   return (
     <div>
       <div
-        className={`${
-          !HabitsObj.showAddModal ? "hidden" : ""
-        } flex py-2 px-4 flex-col max-w-[50%] bg-gray-200`}
+        className="flex py-2 px-4 flex-col max-w-[50%] bg-gray-200"
       >
         <div className="flex items-center justify-between">
           <div>
@@ -135,6 +133,7 @@ const HabitModal = () => {
             <hr />
             <input
               type="submit"
+              value="Edit"
               className="text-white w-fit px-2 mt-4 rounded font-[500] bg-blue-400"
             />
           </form>
@@ -144,4 +143,4 @@ const HabitModal = () => {
   );
 };
 
-export default HabitModal;
+export default EditPage;
