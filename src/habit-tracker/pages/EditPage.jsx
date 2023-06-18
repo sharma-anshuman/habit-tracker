@@ -38,7 +38,7 @@ const EditPage = () => {
         timeOfDay: timeVal,
         startDate: startVal,
       },
-      action: "edit",
+      action: "edit", 
     });
     dispatch({ id: 0, action: "editClose" });
     event.preventDefault();
@@ -55,7 +55,7 @@ const EditPage = () => {
             <h3>Enter the details</h3>
           </div>
           <FontAwesomeIcon
-            onClick={() => dispatch({ id: 0, action: "close" })}
+            onClick={() => dispatch({ id: 0, action: "editClose" })}
             className="cursor-pointer text-2xl"
             icon={faTimes}
           />
