@@ -1,9 +1,11 @@
 import React, { createContext, useContext, useReducer } from "react";
 import { Habits } from "../db/HabitsDB";
+import { useNavigate } from "react-router-dom";
 
 const MainHabitContext = createContext();
 
 const HabitContext = ({ children }) => {
+  const navigate = useNavigate();
   const handleHabits = (acc, { id, action }) => {
     switch (action) {
       case "add": {
@@ -27,7 +29,7 @@ const HabitContext = ({ children }) => {
       case "mta": {
         return {
           ...acc,
-          habits: [...acc.habits.filter((num) => num != id)],
+          habits: [...acc.habits.filter((num) => num !== id)],
           archives: [...acc.archives, id],
         };
       }
@@ -44,15 +46,34 @@ const HabitContext = ({ children }) => {
       case "close": {
         return {
           ...acc,
-          showModal: false,
+          showDetailsModal: false,
+          showAddModal: false,
+          showEditModal: false,
         };
       }
 
-      case "open": {
+      case "openAdd": {
         return {
           ...acc,
-          showModal: true,
+          showAddModal: true,
         };
+      }
+      case "openDetails": {
+        return {
+          ...acc,
+          showAddModal: true,
+        };
+      }
+      case "openEdit": {
+        return {
+          ...acc,
+          showAddModal: true,
+        };
+      }
+
+      case "closeDetail": {
+        navigate('/');
+        return {...acc};
       }
     }
   };
@@ -61,7 +82,9 @@ const HabitContext = ({ children }) => {
     allHabits: [...Habits],
     habits: [...Habits.map(({ id }) => id)],
     archives: [],
-    showModal: false,
+    showDetailsModal: false,
+    showAddModal: false,
+    showEditModal: false,
   });
 
   const elements = { Habits, HabitsObj, dispatch };

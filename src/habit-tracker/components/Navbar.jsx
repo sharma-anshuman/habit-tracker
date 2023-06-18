@@ -21,7 +21,7 @@ const Navbar = () => {
         >
           My Habits
         </h1>
-        <button onClick={() => dispatch({id: 0, action: "open"})} className="border text-sm font-[500] rounded ml-3 px-1 bg-blue-400 text-white">
+        <button onClick={() => dispatch({id: 0, action: "openAdd"})} className="border text-sm font-[500] rounded ml-3 px-1 bg-blue-400 text-white">
           Add an Habit <FontAwesomeIcon icon={faAdd} />
         </button>
       </div>
